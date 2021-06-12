@@ -36,6 +36,7 @@ temp_blist = []
 
 global_L = 0
 
+# Dataset generation
 for i in range(100):
 	A = np.random.rand(dim, 1)
 	temp_Alist = temp_Alist + [A.flatten()]

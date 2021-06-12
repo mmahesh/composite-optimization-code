@@ -34,8 +34,10 @@ dim = 10  # dimension 10
 temp_Alist = []
 temp_blist = []
 
+# to calculate the L value in L-smad property
 global_L = 0
 
+# Synthetic dataset generation - 100 samples
 for i in range(100):
 	temp_A = np.random.rand(dim, 1)
 	A = temp_A*temp_A.T
@@ -107,7 +109,7 @@ def make_update_new(y, grad, uL_est, option=0):
 	# Constructing K.
 
 	# TODO: Here I am using 100 as default setting make it general
-	K = np.zeros((len(y), 100)) # TODO: Should be K^T
+	K = np.zeros((len(y), 100)) 
 	temp_b_2 = np.zeros_like(b) # tilde b
 	
 	count = 0
@@ -210,23 +212,6 @@ def find_gamma(A, b, U, prev_U, uL_est, lL_est):
 	return y_U, gamma
 
 
-# def find_closed_gamma(A, b, U, prev_U, uL_est, lL_est):
-# 	# Finding the inertial parameter gamma
-
-# 	kappa = (del_val - eps_val)*(uL_est/(uL_est+lL_est))
-	
-
-# 	Delta_val = np.linalg.norm(U-prev_U)**2
-# 	print(Delta_val)
-# 	if Delta_val <0:
-# 		y_U = U
-# 		gamma = 0
-# 	else:
-# 		temp_var = (1.5*Delta_val + (7/4) )*(np.linalg.norm(U)**2)
-# 		gamma = np.sqrt(kappa*breg(prev_U, U,\
-# 				 breg_num=breg_num, A=A, b=b, lam=lam)/temp_var)
-# 		y_U = U + gamma*(U-prev_U)
-# 	return y_U, gamma
 
 
 def find_closed_gamma(A, b, U, prev_U, uL_est, lL_est):
@@ -296,7 +281,7 @@ def do_ub_search(A, b, y_U, uL_est):
 	while((delta_new < -1e-7)) :
 		
 		delta_prev = delta_new
-		delta_new = (abs_func(A, b, x_U, y_U, lam, abs_fun_num=abs_fun_num, 	fun_num=fun_num)
+		delta_new = (abs_func(A, b, x_U, y_U, lam, abs_fun_num=abs_fun_num, fun_num=fun_num)
                     - main_func(A, b, x_U, lam,  fun_num=fun_num)
                     + (uL_est*breg(x_U, y_U, breg_num=breg_num, A=A, b=b, lam=lam)))
 
@@ -363,6 +348,7 @@ def line_search(y_U):
 
 if algo == 1:
 	# Implementation of CoCaIn BPG
+	# not required for the paper, just implementing for our own reference
 	gamma_vals = [0]
 	uL_est_vals = [uL_est]
 	lL_est_vals = [lL_est]
@@ -490,6 +476,7 @@ if algo == 3:
 	filename = 'results/gd_bt_global_' + \
 		str(fun_num)+'_abs_fun_num_'+str(abs_fun_num)+'.txt'
 	np.savetxt(filename, np.c_[func_vals, time_vals, lyapunov_func_vals])
+	
 if algo == 4:
 	# IBPM-LS from https://arxiv.org/abs/1707.02278
 

@@ -33,3 +33,7 @@ The function number is denoted as **fun_num**.
 
 In **fun_num**  1 : L1-Regularization is used.  
 In **fun_num**  2 : Squared L2-Regularization is used.  
+
+# Contact
+
+Mahesh Chandra Mukkamala (mamu@math.uni-tuebingen.de)
